@@ -5,7 +5,6 @@ const PORT = process.env.PORT || 3000;
 
 require('dotenv').config();
 
-
 // Middleware para manejar JSON
 app.use(express.json());
 
@@ -22,15 +21,6 @@ const tareaSchema = new mongoose.Schema({
 });
 
 const Tarea = mongoose.model('Tarea', tareaSchema);
-
-// Rutas básicas
-app.get('/', (req, res) => {
-    res.send('¡Hola desde el backend en Vercel!');
-});
-
-app.get('/api/saludo', (req, res) => {
-    res.json({ mensaje: '¡Hola, este es un endpoint de la API!' });
-});
 
 // Ruta para obtener todas las tareas
 app.get('/api/tareas', async (req, res) => {
