@@ -11,8 +11,8 @@ app.use(express.json());
 
 // Conexión a MongoDB Atlas
 mongoose.connect(process.env.MONGO_URI)
-.then(() => console.log('Conectado a MongoDB Atlas'))
-.catch(err => console.error('Error al conectar a MongoDB Atlas:', err));
+    .then(() => console.log('Conectado a MongoDB Atlas'))
+    .catch(err => console.error('Error al conectar a MongoDB Atlas:', err));
 
 // Definición del modelo de tarea
 const tareaSchema = new mongoose.Schema({
@@ -35,10 +35,11 @@ app.get('/api/saludo', (req, res) => {
 // Ruta para obtener todas las tareas
 app.get('/api/tareas', async (req, res) => {
     try {
-        const tareas = await Tarea.find();
-        res.json(tareas);
+        const tareas = await Tarea.find();  // Aquí "Tarea" es el modelo de tu colección
+        res.json(tareas);  // Devuelve las tareas como respuesta en formato JSON
     } catch (error) {
-        res.status(500).json({ error: 'Error al obtener las tareas' });
+        console.error('Error al obtener las tareas:', error);
+        res.status(500).json({ error: 'Hubo un problema al obtener las tareas' });
     }
 });
 
