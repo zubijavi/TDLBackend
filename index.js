@@ -30,7 +30,7 @@ const Tarea = mongoose.model('Tarea', tareaSchema);
 
 // Rutas básicas
 app.get('/', (req, res) => {
-    res.send('¡Hola desde el backend en Vercel!');
+    res.send('¡Hola desde el backend en Railway!');
 });
 
 app.get('/api/saludo', (req, res) => {
