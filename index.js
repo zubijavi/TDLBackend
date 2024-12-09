@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors'); // Importar cors
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -8,10 +9,15 @@ require('dotenv').config();
 // Middleware para manejar JSON
 app.use(express.json());
 
+// Middleware de CORS
+app.use(cors());
+
 // Conexión a MongoDB Atlas
 mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log('Conectado a MongoDB Atlas'))
     .catch(err => console.error('Error al conectar a MongoDB Atlas:', err));
+
+// Rutas y resto del código...
 
 // Definición del modelo de tarea
 const tareaSchema = new mongoose.Schema({
@@ -22,14 +28,22 @@ const tareaSchema = new mongoose.Schema({
 
 const Tarea = mongoose.model('Tarea', tareaSchema);
 
+// Rutas básicas
+app.get('/', (req, res) => {
+    res.send('¡Hola desde el backend en Vercel!');
+});
+
+app.get('/api/saludo', (req, res) => {
+    res.json({ mensaje: '¡Hola, este es un endpoint de la API!' });
+});
+
 // Ruta para obtener todas las tareas
 app.get('/api/tareas', async (req, res) => {
     try {
-        const tareas = await Tarea.find();  // Aquí "Tarea" es el modelo de tu colección
-        res.json(tareas);  // Devuelve las tareas como respuesta en formato JSON
+        const tareas = await Tarea.find();
+        res.json(tareas);
     } catch (error) {
-        console.error('Error al obtener las tareas:', error);
-        res.status(500).json({ error: 'Hubo un problema al obtener las tareas' });
+        res.status(500).json({ error: 'Error al obtener las tareas' });
     }
 });
 
