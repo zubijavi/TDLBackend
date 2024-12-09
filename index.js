@@ -13,12 +13,9 @@ app.use(express.json());
 app.use(cors());
 
 // Conexión a MongoDB Atlas
-mongoose.connect(
-    'mongodb+srv://Javi:4etDSorTKbUQilA0@cluster0.l7s9f.mongodb.net/tareas?retryWrites=true&w=majority',
-)
+mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log('Conectado a MongoDB Atlas'))
     .catch(err => console.error('Error al conectar a MongoDB Atlas:', err));
-
 
 // Rutas y resto del código...
 
